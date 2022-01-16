@@ -1,3 +1,5 @@
+import MersenneTwister from 'mersenne-twister';
+
 const createCalcContainer = (first, second) => ({
   first,
   second,
@@ -27,3 +29,13 @@ export const mod = (first, second) => {
   if (res < 0n) return second + res;
   return res;
 };
+
+export const searchSequenceSeed = (randonValue, bounds) => {
+  const { start, finish } = bounds;
+  for (let seed = start; seed <= finish; ++seed) {
+    const generator = new MersenneTwister(seed);
+    if (generator.random_int() === randonValue)
+      return seed + 1;
+  }
+  return NaN;
+}

@@ -1,4 +1,5 @@
-import { casinoAction } from "../api/casino";
+import { casinoAction } from '../api/casino.js';
+import { searchSequenceSeed } from './utils.js';
 
 export default class CrekerMT {
   #account = null;
@@ -13,9 +14,12 @@ export default class CrekerMT {
     if (!realNumber || status !== 200) return null;
     const upperBound = this.#currentValue();
 
-    // TODO: possible value search loop
+    const seed = searchSequenceSeed(realNumber, {
+      start: lowerBound,
+      finish: upperBound,
+    });
 
-    return null;
+    return isNaN(seed) ? null : seed;
   }
 
   async #playRequest() {

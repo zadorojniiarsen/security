@@ -12,9 +12,9 @@ export default class CrekerLCG {
 
   async run() {
     for (let i = 0; i < this.#ws.length; ++i) {
-      const { status, body } = await this.#playRequest();
-      if (status !== 200) return null;
-      this.#ws[i] = BigInt(body.realNumber);
+      const { status, body: { realNumber } } = await this.#playRequest();
+      if (!realNumber || status !== 200) return null;
+      this.#ws[i] = BigInt(realNumber);
     }
 
     const [ w1, w2, w3 ] = this.#ws;

@@ -19,15 +19,17 @@ export default class Creker {
       console.log('cjto u was sdes proishodi', inverted)
       if (isNaN(inverted)) break;
       modInversed = inverted;
+      break;
     }
 
     const [ s1, s2, s3 ] = this.#ws;
-    const a = Math.floor(((s2 - s1) * modInv) % this.#mod);
+    const a = Math.floor(((s2 - s1) * modInversed) % this.#mod);
     const c = Math.floor((s3 - s2 * a) % this.#mod);
 
     console.log({ a, c });
 
-    const result = await this.#makeBet(a, c, s3)
+    let result;
+    result = await this.#makeBet(a, c, result?.realNumber ?? s3)
     this.#account = result.account;
 
     console.log({ result });
@@ -42,9 +44,9 @@ export default class Creker {
     }
   }
 
-  async #makeBet(a, c, s3) {
+  async #makeBet(a, c, m) {
     const bet = this.#account.money / 0.5;
-    const w = Math.floor(a * (result?.realNumber ?? s3) + c) % this.#mod;
+    const w = Math.floor(a * m + c) % this.#mod;
     return casinoAction(this.#getQueryParams(bet, w));
   }
 
